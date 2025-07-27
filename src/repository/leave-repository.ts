@@ -1,7 +1,9 @@
 import type { Leave } from '@/models/leave.ts'
 import {type Dayjs} from 'dayjs'
+import { useLocalStorage } from '@vueuse/core'
 
 export class LeaveRepository {
+  leaves = useLocalStorage<Leave[]>('leaves', []);
 
   /**
    * Fetches a list of leaves for a given month and year.
@@ -26,6 +28,15 @@ export class LeaveRepository {
       );
 
       resolve(leaves);
+    });
+  }
+
+  addLeave(leave: Leave): Promise<Leave> {
+    this.leaves.value.push(leave);
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve(leave);
+      }, 1000);
     });
   }
 }
