@@ -9,6 +9,11 @@ const router = createRouter({
       name: 'home',
       component: HomeView,
     },
+    {
+      path: '/leave',
+      name: 'leave',
+      component: () => import('../views/LeaveView.vue'),
+    }
   ],
 })
 
