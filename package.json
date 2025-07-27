@@ -21,9 +21,11 @@
     "tailwindcss": "^4.1.11",
     "vee-validate": "^4.15.1",
     "vue": "^3.5.17",
+    "vue-cal": "^5.0.1-rc.27",
     "vue-router": "^4.5.1"
   },
   "devDependencies": {
+    "@pinia/testing": "^1.0.2",
     "@tsconfig/node22": "^22.0.2",
     "@types/jsdom": "^21.1.7",
     "@types/node": "^22.15.32",
@@ -34,7 +36,6 @@
     "@vue/eslint-config-typescript": "^14.5.1",
     "@vue/test-utils": "^2.4.6",
     "@vue/tsconfig": "^0.7.0",
-    "@pinia/testing": "^1.0.2",
     "eslint": "^9.29.0",
     "eslint-plugin-vue": "~10.2.0",
     "jiti": "^2.4.2",
