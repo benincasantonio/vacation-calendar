@@ -2,6 +2,7 @@
 
 import { Dialog, DialogFooter, DialogHeader, DialogContent, DialogTrigger, DialogTitle, DialogClose } from '@/components/ui/dialog'
 import { Button } from '@/components/ui/button'
+import LeaveCreateForm from '@/components/LeaveCreateForm.vue'
 </script>
 
 <template>
@@ -20,6 +21,8 @@ import { Button } from '@/components/ui/button'
           Fill in the details for the new leave request.
         </DialogDescription>
       </DialogHeader>
+
+      <LeaveCreateForm />
 
       <DialogFooter>
         <DialogClose>
