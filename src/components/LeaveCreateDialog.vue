@@ -3,17 +3,20 @@
 import { Dialog, DialogFooter, DialogHeader, DialogContent, DialogTrigger, DialogTitle, DialogClose } from '@/components/ui/dialog'
 import { Button } from '@/components/ui/button'
 import LeaveCreateForm from '@/components/LeaveCreateForm.vue'
+import { ref } from 'vue'
+
+const dialogOpen = ref(false)
+
+const leaveCreateForm = ref<InstanceType<typeof LeaveCreateForm>>()
+
+
 </script>
 
 <template>
-  <Dialog>
+  <Dialog v-model="dialogOpen">
     <DialogTrigger as-child>
       <slot name="trigger" />
     </DialogTrigger>
-
-
-
-
     <DialogContent>
       <DialogHeader>
         <DialogTitle>Add new Leave</DialogTitle>
@@ -22,14 +25,14 @@ import LeaveCreateForm from '@/components/LeaveCreateForm.vue'
         </DialogDescription>
       </DialogHeader>
 
-      <LeaveCreateForm />
+      <LeaveCreateForm ref="leaveCreateForm" />
 
       <DialogFooter>
         <DialogClose>
           <Button variant="destructive">Cancel</Button>
         </DialogClose>
 
-        <Button class="ml-2">Create</Button>
+        <Button class="ml-2" @click="leaveCreateForm?.onSubmit">Create</Button>
       </DialogFooter>
 
     </DialogContent>

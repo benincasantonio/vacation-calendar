@@ -23,7 +23,9 @@ const events = computed(() => {
   })
 })
 
-function onViewChange(event: any) {
+function onViewChange(event: {
+  start: Date,
+}) {
   const startDate = dayjs(event.start).startOf('month')
 
   if (!store.currentMonth.isAfter(startDate)) {
@@ -37,7 +39,6 @@ function onViewChange(event: any) {
 
 <template>
 <VueCalendar
-  v-if="events.length"
   :date-picker="false"
   view="month"
   :event-count="store.leaves.length"

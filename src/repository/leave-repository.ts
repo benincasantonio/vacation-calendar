@@ -1,9 +1,17 @@
 import type { Leave } from '@/models/leave.ts'
-import {type Dayjs} from 'dayjs'
+import dayjs, {type Dayjs} from 'dayjs'
 import { useLocalStorage } from '@vueuse/core'
+import type { LeaveRequest } from '@/models/leave-request.ts'
 
 export class LeaveRepository {
-  leaves = useLocalStorage<Leave[]>('leaves', []);
+  leaves = useLocalStorage<Leave[]>('leaves', [], {
+    serializer: {
+      read: (value) => {
+        return JSON.parse(value);
+      },
+      write: (value) => JSON.stringify(value),
+    },
+  });
 
   /**
    * Fetches a list of leaves for a given month and year.
@@ -11,31 +19,32 @@ export class LeaveRepository {
    */
   getLeaves(date: Dayjs): Promise<Leave[]> {
     return new Promise((resolve) => {
-      const leaves: Leave[] = Array.from({ length: 10 }, (_, i) => {
-      const baseDate = date.add(Math.random() * 29, 'day')
-      return {
-        id: `leave-${i + 1}`,
-        userId: `user-${i + 1}`,
-        type: i % 2 === 0 ? 'vacation' : 'time_off',
-        status: i % 3 === 0 ? 'approved' : i % 3 === 1 ? 'pending' : 'rejected',
-        startDate: baseDate.startOf('day').format('YYYY-MM-DD'),
-        endDate: baseDate.endOf('day').format('YYYY-MM-DD'),
-        date: baseDate.add(i, 'day').format('YYYY-MM-DD'),
-        hours: i % 2 === 0 ? 8: Math.floor(Math.random() * 7) + 1,
-        createdAt: new Date().toISOString(),
-      };
-      }
-      );
+      const leavesForMonth = this.leaves.value.filter(leave => {
+        const startDate = dayjs(leave.startDate);
+        const endDate = dayjs(leave.endDate);
 
-      resolve(leaves);
+        return (startDate.isSame(date, 'month') && startDate.isSame(date, 'year')) ||
+          (endDate.isSame(date, 'month') && endDate.isSame(date, 'year'));
+      })
+
+      resolve(leavesForMonth);
     });
   }
 
-  addLeave(leave: Leave): Promise<Leave> {
-    this.leaves.value.push(leave);
+  addLeave(leave: LeaveRequest): Promise<Leave> {
+    console.log(this.leaves)
+    const newLeave: Leave = {
+      id: `leave-${Date.now()}`,
+      status: "pending",
+      ...leave,
+      createdAt: new Date().toISOString(),
+    }
+
+    this.leaves.value = [...this.leaves.value, newLeave];
+
     return new Promise((resolve) => {
       setTimeout(() => {
-        resolve(leave);
+        resolve(newLeave);
       }, 1000);
     });
   }

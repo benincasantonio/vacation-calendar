@@ -9,8 +9,6 @@ export interface Leave {
 
   startDate?: string;
   endDate?: string;
-
-  date?: string;
   hours?: number;
 
   createdAt: string;

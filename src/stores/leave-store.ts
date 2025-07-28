@@ -27,21 +27,11 @@ export const useLeaveStore = defineStore('leave-store', () => {
   }
 
   async function addLeave(request: LeaveRequest): Promise<Leave> {
-    const newLeave: Leave = {
-      id: `leave-${leaves.value.length + 1}`,
-      userId: request.userId,
-      type: request.type,
-      status: 'pending',
-      startDate: request.startDate,
-      endDate: request.endDate,
-      date: dayjs(request.startDate).format('YYYY-MM-DD'),
-      hours: request.hours,
-      createdAt: new Date().toISOString(),
-    }
+    const newLeave = await leaveRepository.addLeave(request)
 
     leaves.value = [...leaves.value, newLeave]
 
-    return newLeave
+    return newLeave;
   }
 
 
