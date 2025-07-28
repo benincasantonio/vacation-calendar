@@ -10,10 +10,18 @@ const dialogOpen = ref(false)
 const leaveCreateForm = ref<InstanceType<typeof LeaveCreateForm>>()
 
 
+function onSubmit() {
+  leaveCreateForm.value?.onSubmit().then()
+    .finally(() => {
+    dialogOpen.value = false
+  })
+}
+
+
 </script>
 
 <template>
-  <Dialog v-model="dialogOpen">
+  <Dialog v-model:open="dialogOpen">
     <DialogTrigger as-child>
       <slot name="trigger" />
     </DialogTrigger>
@@ -32,7 +40,7 @@ const leaveCreateForm = ref<InstanceType<typeof LeaveCreateForm>>()
           <Button variant="destructive">Cancel</Button>
         </DialogClose>
 
-        <Button class="ml-2" @click="leaveCreateForm?.onSubmit">Create</Button>
+        <Button class="ml-2" @click="onSubmit">Create</Button>
       </DialogFooter>
 
     </DialogContent>

@@ -32,7 +32,6 @@ export class LeaveRepository {
   }
 
   addLeave(leave: LeaveRequest): Promise<Leave> {
-    console.log(this.leaves)
     const newLeave: Leave = {
       id: `leave-${Date.now()}`,
       status: "pending",

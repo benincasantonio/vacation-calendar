@@ -41,7 +41,7 @@ const schema = yup.object({
   hours: yup.number().min(1).max(8).required('Hours are required'),
 })
 
-const { handleSubmit, errors, validate } = useForm({
+const { handleSubmit, errors, validate, resetForm } = useForm({
   validationSchema: schema,
   initialValues: {
     type: 'vacation',
@@ -71,6 +71,8 @@ const onSubmit = handleSubmit(async (values) => {
     endDate: values.type === 'vacation' ? dayjs(values.endDate).startOf('day').add(17, 'hours').toISOString() : null,
     userId: 'user-123',
   } as LeaveRequest)
+
+  resetForm()
 })
 
 defineExpose({
