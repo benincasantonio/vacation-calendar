@@ -1,6 +1,6 @@
 <script setup lang="ts">
 
-import { Dialog, DialogFooter, DialogHeader, DialogContent, DialogTrigger, DialogTitle, DialogClose } from '@/components/ui/dialog'
+import { Dialog, DialogFooter, DialogHeader, DialogContent, DialogTrigger, DialogTitle, DialogClose, DialogDescription } from '@/components/ui/dialog'
 import { Button } from '@/components/ui/button'
 import LeaveCreateForm from '@/components/LeaveCreateForm.vue'
 import { ref } from 'vue'

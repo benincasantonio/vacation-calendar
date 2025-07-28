@@ -67,8 +67,8 @@ const onSubmit = handleSubmit(async (values) => {
   await leaveStore.addLeave({
     type: values.type,
     hours: values.hours,
-    startDate: values.startDate,
-    endDate: values.type === 'vacation' ? values.endDate : undefined,
+    startDate: dayjs(values.startDate).add(8, 'hours').toISOString(),
+    endDate: values.type === 'vacation' ? dayjs(values.endDate).startOf('day').add(17, 'hours').toISOString() : null,
     userId: 'user-123',
   } as LeaveRequest)
 })
@@ -110,7 +110,7 @@ defineExpose({
     </div>
     <div>
       <label class="block mb-1">Hours (daily)</label>
-      <Input v-if="type === 'vacation'" :model-value="8" type="number" disabled @update:model-value="onTypeChange" />
+      <Input v-if="type === 'vacation'" :model-value="8" type="number" disabled />
       <Input v-else v-model="hours" type="number" min="1" max="8" />
       <span v-if="errors.hours && type !== 'vacation'" class="text-red-500 text-xs">{{ errors.hours }}</span>
     </div>

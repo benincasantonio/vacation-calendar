@@ -12,8 +12,8 @@ const events = computed(() => {
   return store.leaves.map((leave) => {
     return {
       id: leave.id,
-      start: dayjs(leave.startDate).startOf('day').toDate(),
-      end: dayjs(leave.endDate).endOf('day').toDate(),
+      start: dayjs(leave.startDate).toDate(),
+      end: leave.type === 'vacation' ? dayjs(leave.endDate).endOf('day').toDate() : dayjs(leave.startDate).add(leave.hours ?? 0, 'hour').toDate(),
       title: leave.type,
       color: leave.status === 'approved' ? '#007bff' : leave.status === 'pending' ? '#ffc107' : '#dc3545',
       meta: {
@@ -41,7 +41,6 @@ function onViewChange(event: {
 <VueCalendar
   :date-picker="false"
   view="month"
-  :event-count="store.leaves.length"
   :views-bar="false"
   events-on-month-view
   :today-button="false"
